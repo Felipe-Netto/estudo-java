@@ -20,11 +20,17 @@ public class ListaTarefas {
             for(Tarefa t : tarefasSet){
                 if(t.getDescricao().equalsIgnoreCase(descricao)){
                     tarefaParaRemover = t;
+                    break;
                 }
             }
         }else{
             throw new RuntimeException("A collection está vazia!");
         }
+
+        if(tarefaParaRemover == null){
+            System.out.println("Tarefa não encontrada");
+        }
+
         tarefasSet.remove(tarefaParaRemover);
         System.out.println("Tarefa removida: " + tarefaParaRemover);
     }
@@ -67,31 +73,53 @@ public class ListaTarefas {
     }
 
     public void marcarTarefaConcluida(String descricao){
+        Tarefa tarefaConcluida = null;
         if(!tarefasSet.isEmpty()){
             for(Tarefa t : tarefasSet){
                 if(t.getDescricao().equalsIgnoreCase(descricao)){
-                    t.setTarefaConcluida(true);
+                    tarefaConcluida = t;
+                    break;
                 }
             }
         }else{
             throw new RuntimeException("A collection está vazia!");
+        }
+        if(tarefaConcluida != null){
+            if(!tarefaConcluida.getTarefaConcluida()){
+                tarefaConcluida.setTarefaConcluida(true);
+            }
+        }else{
+            System.out.println("Tarefa não encontrada!");
         }
     }
 
     public void marcarTarefaPendente(String descricao){
+        Tarefa tarefaPendente = null;
         if(!tarefasSet.isEmpty()){
             for(Tarefa t : tarefasSet){
                 if(t.getDescricao().equalsIgnoreCase(descricao)){
-                    t.setTarefaConcluida(false);
+                    tarefaPendente = t;
+                    break;
                 }
             }
         }else{
             throw new RuntimeException("A collection está vazia!");
         }
+        if(tarefaPendente != null){
+            if(tarefaPendente.getTarefaConcluida()){
+                tarefaPendente.setTarefaConcluida(false);
+            }
+        }else{
+            System.out.println("Tarefa não encontrada!");
+        }
     }
 
     public void limparListaTarefas(){
-        tarefasSet.removeAll(tarefasSet);
+        if(tarefasSet.isEmpty()){
+            System.out.println("A lista já está vazia!");
+        }else{
+            tarefasSet.clear();
+        }
     }
 
     public static void main(String[] args) {
